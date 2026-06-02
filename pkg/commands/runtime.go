@@ -29,11 +29,12 @@ type MCPToolInfo struct {
 
 // ContextStats describes current session context window usage.
 type ContextStats struct {
-	UsedTokens       int
-	TotalTokens      int // model context window
-	CompressAtTokens int // compression threshold
-	UsedPercent      int // 0-100
-	MessageCount     int
+	UsedTokens        int
+	TotalTokens       int // model context window
+	CompressAtTokens  int // hard budget compression threshold
+	SummarizeAtTokens int // soft summarization trigger
+	UsedPercent       int // 0-100
+	MessageCount      int
 }
 
 // StopResult describes the outcome of a stop request for the current session.

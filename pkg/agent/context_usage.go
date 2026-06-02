@@ -61,6 +61,13 @@ func computeContextUsage(agent *AgentInstance, sessionKey string) *bus.ContextUs
 	// proactive trigger (msgTokens + toolTokens + maxTokens > contextWindow).
 	compressAt := effectiveWindow
 
+	// summarizeAt = soft summarization trigger: matches maybeSummarize's
+	// threshold (contextWindow * SummarizeTokenPercent / 100).
+	summarizeAt := contextWindow * agent.SummarizeTokenPercent / 100
+	if summarizeAt <= 0 {
+		summarizeAt = compressAt
+	}
+
 	usedPercent := 0
 	if compressAt > 0 {
 		usedPercent = usedTokens * 100 / compressAt
@@ -70,9 +77,10 @@ func computeContextUsage(agent *AgentInstance, sessionKey string) *bus.ContextUs
 	}
 
 	return &bus.ContextUsage{
-		UsedTokens:       usedTokens,
-		TotalTokens:      contextWindow,
-		CompressAtTokens: compressAt,
-		UsedPercent:      usedPercent,
+		UsedTokens:        usedTokens,
+		TotalTokens:       contextWindow,
+		CompressAtTokens:  compressAt,
+		SummarizeAtTokens: summarizeAt,
+		UsedPercent:       usedPercent,
 	}
 }

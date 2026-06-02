@@ -79,6 +79,7 @@ function parseContextUsage(
     used_tokens: used,
     total_tokens: total,
     compress_at_tokens: Number(obj.compress_at_tokens) || 0,
+    summarize_at_tokens: obj.summarize_at_tokens != null ? Number(obj.summarize_at_tokens) : undefined,
     used_percent: Number(obj.used_percent) || 0,
   }
 }

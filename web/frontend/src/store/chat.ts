@@ -53,6 +53,7 @@ export interface ContextUsage {
   used_tokens: number
   total_tokens: number
   compress_at_tokens: number
+  summarize_at_tokens?: number
   used_percent: number
 }
 
